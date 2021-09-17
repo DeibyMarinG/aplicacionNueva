@@ -1,0 +1,167 @@
+timestamp: 2021-09-02T13:43:52.872569
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2021-09-02T13:43:52.891931
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2021-09-02T13:43:52.906880
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2021-09-02T13:43:52.921047
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2021-09-02T13:43:52.935372
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2021-09-02T13:43:52.947558
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2021-09-02T14:03:12.326979
+CREATE TABLE "employees"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512)
+);
+success!
+timestamp: 2021-09-02T14:45:10.513494
+CREATE TABLE "Usuarios"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "nombre" CHAR(512),
+    "correo" CHAR(512),
+    "numero_telefono" CHAR(512),
+    "contraseña" CHAR(512),
+    "fecha_nacimiento" DATE
+);
+success!
+timestamp: 2021-09-03T14:31:49.725803
+ALTER TABLE "auth_user" ADD "is_active" CHAR(1);
+timestamp: 2021-09-03T14:31:49.731349
+ALTER TABLE "auth_user" ADD "created_on" TIMESTAMP;
+timestamp: 2021-09-03T14:31:49.735570
+ALTER TABLE "auth_user" ADD "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2021-09-03T14:31:49.740009
+ALTER TABLE "auth_user" ADD "modified_on" TIMESTAMP;
+timestamp: 2021-09-03T14:31:49.744002
+ALTER TABLE "auth_user" ADD "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+success!
+timestamp: 2021-09-03T14:31:49.750748
+ALTER TABLE "auth_group" ADD "is_active" CHAR(1);
+timestamp: 2021-09-03T14:31:49.753536
+ALTER TABLE "auth_group" ADD "created_on" TIMESTAMP;
+timestamp: 2021-09-03T14:31:49.757531
+ALTER TABLE "auth_group" ADD "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2021-09-03T14:31:49.760526
+ALTER TABLE "auth_group" ADD "modified_on" TIMESTAMP;
+timestamp: 2021-09-03T14:31:49.764634
+ALTER TABLE "auth_group" ADD "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+success!
+timestamp: 2021-09-03T14:31:49.773058
+ALTER TABLE "auth_membership" ADD "is_active" CHAR(1);
+timestamp: 2021-09-03T14:31:49.775993
+ALTER TABLE "auth_membership" ADD "created_on" TIMESTAMP;
+timestamp: 2021-09-03T14:31:49.779891
+ALTER TABLE "auth_membership" ADD "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2021-09-03T14:31:49.784072
+ALTER TABLE "auth_membership" ADD "modified_on" TIMESTAMP;
+timestamp: 2021-09-03T14:31:49.787184
+ALTER TABLE "auth_membership" ADD "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+success!
+timestamp: 2021-09-03T14:31:49.792927
+ALTER TABLE "auth_permission" ADD "is_active" CHAR(1);
+timestamp: 2021-09-03T14:31:49.795928
+ALTER TABLE "auth_permission" ADD "created_on" TIMESTAMP;
+timestamp: 2021-09-03T14:31:49.799865
+ALTER TABLE "auth_permission" ADD "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2021-09-03T14:31:49.803561
+ALTER TABLE "auth_permission" ADD "modified_on" TIMESTAMP;
+timestamp: 2021-09-03T14:31:49.807231
+ALTER TABLE "auth_permission" ADD "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+success!
+timestamp: 2021-09-06T11:21:47.845640
+ALTER TABLE "auth_user" ADD "address" CHAR(512);
+success!
+timestamp: 2021-09-06T11:50:31.671189
+ALTER TABLE "auth_user" ADD "birthday" DATE;
+success!
+timestamp: 2021-09-06T14:33:26.154489
+CREATE TABLE "ing_eg"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "tipo" CHAR(512),
+    "nombre" CHAR(512),
+    "monto" CHAR(512),
+    "recurrencia" CHAR(512),
+    "empieza" DATE,
+    "termina" DATE
+);
+success!
+success!
+timestamp: 2021-09-06T14:44:29.289182
+ALTER TABLE "ing_eg" ADD "id_usuario" CHAR(512);
+success!
+success!
+success!
+timestamp: 2021-09-06T21:48:44.088948
+CREATE TABLE "reporte"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "tipo" CHAR(512),
+    "nombre" CHAR(512),
+    "total" DOUBLE,
+    "recurrencia" INTEGER,
+    "empieza" DATE,
+    "termina" DATE,
+    "id_usuario" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+DROP TABLE "ing_eg";
+success!
+timestamp: 2021-09-07T00:51:46.152258
+CREATE TABLE "ing_eg"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "tipo" CHAR(512),
+    "nombre" CHAR(512),
+    "monto" DOUBLE,
+    "recurrencia" INTEGER,
+    "empieza" DATE,
+    "termina" DATE,
+    "id_usuario" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2021-09-13T16:24:21.246514
+ALTER TABLE "ing_eg" ADD "archivo" CHAR(512);
+success!

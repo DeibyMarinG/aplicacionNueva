@@ -1,0 +1,19 @@
+
+
+{{for reporte in lista_reportes:}}
+<h4>{{=dict(reporte)}}</h4>
+{{pass}}
+
+form1=SQLFORM(db.ing_eg)            
+    return dict(lista_activos_pasivos=lista_activos_pasivos,lista_reportes=lista_reportes,form1=form1)
+
+    {{from datetime import datetime}}
+        {{fechainicio=datetime.strptime(str(empieza),'%Y-%m-%d')}}
+        {{fechatermina=datetime.strptime(str(termina),'%Y-%m-%d')}}
+        {{if(fechainicio>fechatermina):}}
+        {{response.flash = T("Error la fecha final es menor que la inicial")}}
+        {{pass}}
+
+        {{for elemento in diccionario_grafico:}}
+            [{{=elemento}} ,{{diccionario_grafico[elemento]}}],
+          {{pass}}

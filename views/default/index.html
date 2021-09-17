@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+
+<img src="/aplicacionNueva/static/images/imagen.jpg" width="500px">
+{{if not auth.user:}}
+<h2>Registrate es gratis</h2>
+  {{=myregister()}}
+{{pass}}
+
+{{for user in support_user:}}
+<h2>{{=T("Contact Us")}}</h2>  
+<h4>{{=user.nombre}}</h4>
+  <h4 style="color: green;">{{=user.correo}}</h4>
+{{pass}}
+

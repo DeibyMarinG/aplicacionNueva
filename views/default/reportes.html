@@ -1,0 +1,114 @@
+{{extend 'layout.html'}}
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  </style>
+
+<img src="/aplicacionNueva/static/images/imagen.jpg" width="500px">
+
+<h2 style="color: indigo;">Registro de Activos y Pasivos</h2>
+
+<form action="ingreso_accion" class="">
+  <table>
+    <tr>
+      <td><label for="fname">Nombre del registro:</label>
+        <input name="nombre" placeholder="Ej:salario" required/></td>
+      <td><label for="fname">Recurrencia en dias:</label>
+        <input name="recurrencia" placeholder="ej:30" type="number" min="0" required/></td>
+      <td><label for="fname">Check para activo o vacío para pasivo:</label>
+        <input name="tipo" type="checkbox"/></td>
+    </tr>
+    <tr>
+      <td><label for="fname">Fecha inicio:</label>
+        <input name="empieza" type="date" required/></td>
+      <td><label for="fname">Fecha fin:</label>
+        <input name="termina" type="date" required/></td>
+      <td><label for="fname">Monto por recurrencia:</label>
+        <input name="monto" placeholder="ej:30" type="number" min="0" required/></td>
+        
+
+    </tr>
+    
+  </table>
+  <br><input type="submit" class="btn btn-primary" value="Registrar" style="color: rgb(255, 255, 255);"/><br><br>
+</form>
+{{=form1}}
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Tipo</th>
+    <th>Recurrencia</th>
+    <th>Fecha inicio</th>
+    <th>Fecha final</th>
+    <th>Monto</th>
+  </tr>
+  {{for listado in lista_activos_pasivos:}}
+  <tr>
+    <td><label>{{=listado.id}}</label>{{=A(' editar ',_href=URL('edit',args=[listado.id],vars=dict(targetdb=0)))}} {{=A(' eliminar ',_href=URL('delete',args=[listado.id],vars=dict(targetdb=0)))}}</td>
+    <td><label>{{=listado.nombre}}</label></td>
+    <td><label>{{=listado.tipo}}</label></td>
+    <td><label>{{=listado.recurrencia}}</label></td>
+    <td><label>{{=listado.empieza}}</label></td>
+    <td><label>{{=listado.termina}}</label></td>
+    <td><label>{{=listado.monto}}</label></td>
+  </tr>
+  {{pass}}
+</table> 
+<h2 style="color: indigo;">Registro de reportes</h2>
+<form action="ingreso_registro" class="">
+  <table>
+    <tr>
+      <td><label for="fname">Nombre del registro:</label>
+        <input name="nombre_" placeholder="Ej:salario" required/></td>
+      
+      <td><label for="fname">Fecha inicio:</label>
+        <input name="empieza_" type="date" required/></td>
+      <td><label for="fname">Fecha fin:</label>
+        <input name="termina_" type="date" required/></td>
+        <td><label for="fname">Automático:</label>
+          <input name="tipo_" id="autom" type="checkbox"/></td>
+        <td><label for="fname">Recurrencia en dias:</label>
+          <input name="recurrencia_" placeholder="ej:30" type="number" min="0" required/></td>
+    </tr>
+    
+  </table>
+  <br><input type="submit" class="btn btn-primary" value="Registrar" style="color: rgb(255, 255, 255);"/><br><br>
+</form>
+
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Tipo</th>
+    <th>Recurrencia</th>
+    <th>Fecha inicio</th>
+    <th>Fecha final</th>
+    <th>Total</th>
+  </tr>
+  {{for reporte in lista_reportes:}}
+  <tr>
+    <td><label>{{=reporte.id}}</label>{{=A(' editar ',_href=URL('edit',args=[reporte.id],vars=dict(targetdb=1)))}} {{=A(' eliminar ',_href=URL('delete',args=[reporte.id],vars=dict(targetdb=1)))}}</td>
+    <td><label>{{=reporte.nombre}}</label></td>
+    <td><label>{{=reporte.tipo}}</label></td>
+    <td><label>{{=reporte.recurrencia}}</label></td>
+    <td><label>{{=reporte.empieza}}</label></td>
+    <td><label>{{=reporte.termina}}</label></td>
+    <td><label>{{=reporte.total}}{{=A(' recalcular ',_href=URL('recalcular_reporte',args=[reporte.id],vars=dict(fuente=0)))}}</label></td>
+  </tr>
+  {{pass}}
+</table> 
