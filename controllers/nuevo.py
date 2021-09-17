@@ -1,3 +1,4 @@
+
 @auth.requires_login()
 def reportes():
     db.ing_eg.id_usuario.default=auth.user.id
@@ -25,23 +26,32 @@ def graficos():
         Field('Fecha_inicio','date', requires=IS_NOT_EMPTY()),
         Field('Fecha_final','date', requires=IS_NOT_EMPTY()), Field('regla', requires=IS_IN_SET(['Solo en Rango', 'Atraviesen el rango'],
                      error_message='Error')))
-    if(session.listado==None):
-        myquery=(db.ing_eg.id_usuario==auth.user.id) 
-        session.listado= db(myquery).select()
+    if(contenedor_vars.grafico==None): 
+        contenedor_vars.grafico='gantt'
     if form.process().accepted:
         fechainicio=datetime.strptime(str(form.vars.Fecha_inicio),'%Y-%m-%d')
         fechatermina=datetime.strptime(str(form.vars.Fecha_final),'%Y-%m-%d')
         if fechatermina>=fechainicio: 
             response.flash = 'form accepted'
-            session.fecha_inicio = form.vars.Fecha_inicio
-            session.fecha_final = form.vars.Fecha_final
-            if(form.vars.regla=='Atraviesen el rango'):
-                myquery=(db.ing_eg.id_usuario==auth.user.id) & ((form.vars.Fecha_final>=db.ing_eg.empieza) & (form.vars.Fecha_inicio <= db.ing_eg.termina))
-            else:
-                 myquery=(db.ing_eg.id_usuario==auth.user.id) & ((form.vars.Fecha_final>=db.ing_eg.termina) & (form.vars.Fecha_inicio <=db.ing_eg.empieza ))
-            session.listado= db(myquery).select() 
+            contenedor_vars.grafico='gantt'
+            contenedor_vars.formulario=form
         else:
             response.flash = 'Fecha inicial debe ser menor que final'
     elif form.errors:
             response.flash = 'form has errors'
     return dict(form=form)
+
+def gantt():
+    formulario=contenedor_vars.formulario
+    forma={'fecha_inicio':None,'fecha_final':None}
+    if(formulario!=None):
+        forma['fecha_inicio'] = formulario.Fecha_inicio
+        forma['fecha_final'] = formulario.Fecha_final
+        if(formulario.vars.regla=='Atraviesen el rango'):
+            myquery=(db.ing_eg.id_usuario==auth.user.id) & ((formulario.Fecha_final>=db.ing_eg.empieza) & (formulario.Fecha_inicio <= db.ing_eg.termina))
+        else:
+            myquery=(db.ing_eg.id_usuario==auth.user.id) & ((formulario.Fecha_final>=db.ing_eg.termina) & (formulario.Fecha_inicio <=db.ing_eg.empieza ))
+    else:
+        myquery=(db.ing_eg.id_usuario==auth.user.id)
+    forma['listado']= db(myquery).select()     
+    return(dict(forma_grafico=forma))
