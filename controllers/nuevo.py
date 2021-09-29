@@ -29,8 +29,8 @@ def graficos():
     if(contenedor_vars.grafico==None): 
         contenedor_vars.grafico='gantt'
     if form.process().accepted:
-        fechainicio=datetime.strptime(str(form.vars.Fecha_inicio),'%Y-%m-%d')
-        fechatermina=datetime.strptime(str(form.vars.Fecha_final),'%Y-%m-%d')
+        fechainicio=datetime.strptime(str(form.vars.Fecha_inicio),'%d/%m/%Y')
+        fechatermina=datetime.strptime(str(form.vars.Fecha_final),'%d/%m/%Y')
         if fechatermina>=fechainicio: 
             response.flash = 'form accepted'
             contenedor_vars.grafico='gantt'
@@ -55,3 +55,7 @@ def gantt():
         myquery=(db.ing_eg.id_usuario==auth.user.id)
     forma['listado']= db(myquery).select()     
     return(dict(forma_grafico=forma))
+
+def graficos_():
+    if(contenedor_vars.grafico=='gantt'):
+        redirect(URL('gantt'))

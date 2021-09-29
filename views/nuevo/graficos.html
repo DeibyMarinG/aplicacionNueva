@@ -1,11 +1,10 @@
 {{=form}}
+<div id="contenedor2"></div>
 {{if ((contenedor_vars.grafico=='gantt')):}}
   {{=response.toolbar()}}
-  {{if forma_grafico['fecha_inicio']!=None:}}
-    <h2>Activos y pasivos desde {{=forma_grafico['fecha_inicio']}} a {{=forma_grafico['fecha_final']}}</h2>
-  {{pass}}
-  {{extend 'graficos_.html'}}
-  <div id="chart_div"></div>
-  <div id="table_sort_div"></div>
-  <div id="chart_sort_div"></div>
+  
+  <script>
+    web2py_component("{{=URL('nuevo','graficos_')}}","contenedor2")
+
+  </script>
 {{pass}}
