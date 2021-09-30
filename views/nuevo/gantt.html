@@ -1,3 +1,9 @@
+{{=response.toolbar()}}
+<h2>Forma grafico</h2>
+{{=forma_grafico}}
+<h2>Termina</h2>
+{{=contenedor_vars.grafico}}
+{{=request.vars.formularios}}
 {{if forma_grafico['fecha_inicio']!=None:}}
     <h2>Activos y pasivos desde {{=forma_grafico['fecha_inicio']}} a {{=forma_grafico['fecha_final']}}</h2>
 {{pass}}
@@ -44,25 +50,6 @@
     var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
 
     chart.draw(data, options);
-
-    setInterval(function() {
-          data.addRows([
-          {{for lista in forma_grafico['listado']:}}
-          {{f_inicia=datetime.strptime(str(lista.empieza),'%Y-%m-%d')}}
-          {{f_inicia2=date(f_inicia.year,f_inicia.month-1,f_inicia.day)}}
-          {{inicia=f_inicia2.strftime('new Date(%Y,%m,%d)')}}
-          {{f_termina=datetime.strptime(str(lista.termina),'%Y-%m-%d')}}
-          {{f_termina2=date(f_termina.year,f_termina.month-1,f_termina.day)}}
-          {{termina=f_termina2.strftime('new Date(%Y,%m,%d)')}}
-          
-
-          ['{{=lista.id}}', '{{=lista.nombre}}', '{{=lista.tipo}}',
-          {{=inicia}}, {{=termina}}, null, 100, null],
-          {{pass}}
-          ]);
-          
-          chart.draw(data, options);
-        }, 13000);
   }
 </script>
 {{pass}}

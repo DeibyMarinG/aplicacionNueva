@@ -1,10 +1,5 @@
 {{=form}}
-<div id="contenedor2"></div>
-{{if ((contenedor_vars.grafico=='gantt')):}}
-  {{=response.toolbar()}}
-  
-  <script>
-    web2py_component("{{=URL('nuevo','graficos_')}}","contenedor2")
-
-  </script>
+{{=response.toolbar()}}
+{{if(contenedor_vars.grafico=='gantt'):}}
+{{=LOAD(c='nuevo',f='gantt',vars=dict(formularios=form.vars.Fecha_inicio),ajax=True,times="infinity",content="cargando...")}}
 {{pass}}

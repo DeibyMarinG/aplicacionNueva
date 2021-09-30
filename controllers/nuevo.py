@@ -26,8 +26,8 @@ def graficos():
         Field('Fecha_inicio','date', requires=IS_NOT_EMPTY()),
         Field('Fecha_final','date', requires=IS_NOT_EMPTY()), Field('regla', requires=IS_IN_SET(['Solo en Rango', 'Atraviesen el rango'],
                      error_message='Error')))
-    if(contenedor_vars.grafico==None): 
-        contenedor_vars.grafico='gantt'
+    #if(contenedor_vars.grafico==None): 
+    #    contenedor_vars.grafico='gantt'
     if form.process().accepted:
         fechainicio=datetime.strptime(str(form.vars.Fecha_inicio),'%d/%m/%Y')
         fechatermina=datetime.strptime(str(form.vars.Fecha_final),'%d/%m/%Y')
@@ -51,6 +51,7 @@ def gantt():
             myquery=(db.ing_eg.id_usuario==auth.user.id) & ((formulario.Fecha_final>=db.ing_eg.empieza) & (formulario.Fecha_inicio <= db.ing_eg.termina))
         else:
             myquery=(db.ing_eg.id_usuario==auth.user.id) & ((formulario.Fecha_final>=db.ing_eg.termina) & (formulario.Fecha_inicio <=db.ing_eg.empieza ))
+
     else:
         myquery=(db.ing_eg.id_usuario==auth.user.id)
     forma['listado']= db(myquery).select()     
@@ -58,4 +59,5 @@ def gantt():
 
 def graficos_():
     if(contenedor_vars.grafico=='gantt'):
-        redirect(URL('gantt'))
+        gantt()
+        return(dict())
